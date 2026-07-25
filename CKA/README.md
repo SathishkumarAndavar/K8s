@@ -1,8 +1,11 @@
-# Kubernetes Practical Examples
+# CKA Practice
 
-This document contains practical, copy-paste-ready examples for common Kubernetes administration and development tasks. Each example includes the manifest, `kubectl` commands, and an explanation of the outcome.
+This folder contains resources for Certified Kubernetes Administrator (CKA) exam preparation.
 
-## 1. Advanced Deployment with Probes and Rolling Update Strategy
+- 200 Practice Questions
+- Practice Question Answers
+- Hands-on Tasks
+- Scheduling Notes
 
 This example demonstrates a Deployment with liveness and readiness probes, resource requests/limits, and a configured rolling update strategy for zero-downtime updates.
 
