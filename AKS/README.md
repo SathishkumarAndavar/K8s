@@ -19,14 +19,32 @@ Azure manages the Kubernetes control plane for free, and you are responsible for
 ## Essential commands
 
 ```sh
-# Authenticate kubectl to the cluster
+# Create a resource group
+az group create --name <resource-group> --location <azure-location>
+
+# Create a basic AKS cluster
+az aks create --resource-group <resource-group> --name <cluster-name> --node-count 1 --enable-addons monitoring --generate-ssh-keys
+
+# Authenticate kubectl
 az aks get-credentials --resource-group <resource-group> --name <cluster-name>
 kubectl get nodes -o wide
 
 # Inspect cluster and agent pools
 az aks show --resource-group <resource-group> --name <cluster-name>
 az aks nodepool list --resource-group <resource-group> --cluster-name <cluster-name>
-az aks nodepool show --resource-group <resource-group> --cluster-name <cluster-name> --name <pool-name>
+
+# Add a new node pool with a specific VM size (e.g., compute-optimized)
+az aks nodepool add \
+    --resource-group <resource-group> \
+    --cluster-name <cluster-name> \
+    --name computepool \
+    --node-count 1 \
+    --node-vm-size Standard_F8s_v2 \
+    --labels workload=compute-apps \
+    --taints compute-apps=true:NoSchedule
+
+# Add another node pool for memory-intensive workloads
+az aks nodepool add --resource-group <resource-group> --cluster-name <cluster-name> --name memorypool --node-count 1 --node-vm-size Standard_E8s_v3
 ```
 
 ## Upgrade Process

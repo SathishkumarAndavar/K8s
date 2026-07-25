@@ -2,7 +2,7 @@
 
 ## How it works
 
-Amazon EKS manages the Kubernetes control plane. You choose and operate the data plane: EKS managed node groups (EC2), self-managed nodes, Fargate for compatible Pods, or an EKS-managed compute option where applicable. Worker nodes join the cluster over the VPC and run the normal Kubernetes kubelet, runtime, CNI, and kube-proxy components.
+Amazon EKS provides a managed Kubernetes control plane. You are responsible for the data plane, which can be EKS Managed Node Groups (EC2), self-managed EC2 nodes, or serverless with AWS Fargate. Worker nodes run in your VPC and are your responsibility to provision and scale.
 
 ## Important features
 
@@ -12,7 +12,7 @@ Amazon EKS manages the Kubernetes control plane. You choose and operate the data
     -   **Managed Node Groups**: AWS handles node updates, patching, and graceful termination via an Auto Scaling Group. This is the recommended approach for most workloads.
     -   **Self-Managed Nodes**: You are fully responsible for the EC2 instances, including AMI updates, instance health, and cluster joining logic. This offers more control but requires more operational overhead.
 - **Networking:** the Amazon VPC CNI gives Pods VPC-routable addresses. Plan VPC/subnet IP capacity before high Pod density.
-- **Identity:** prefer EKS Pod Identity or IRSA for Pod-to-AWS permissions; do not distribute node IAM credentials to applications.
+- **Identity:** use **EKS Pod Identity** (recommended) or IAM Roles for Service Accounts (IRSA) for providing AWS permissions to Pods. Avoid using node IAM profiles for applications.
 - **Storage:** use the EBS CSI driver for block volumes and EFS CSI driver for shared file workloads.
 - **Load balancing:** use the AWS Load Balancer Controller when you need ALB/NLB resources from Kubernetes Services or Ingress/Gateway resources.
 
@@ -83,10 +83,35 @@ managedNodeGroups:
 addons:
 - name: vpc-cni
 - name: coredns
+  # You can override default addon configurations
   configurationValues: |-
     replicaCount: 2
 - name: kube-proxy
 - name: aws-ebs-csi-driver
+# Add another node group for memory-intensive applications
+- name: memory-apps
+  instanceType: r7i.large # 'r' series for memory-optimized
+  privateNetworking: true
+  minSize: 1
+  maxSize: 10
+  desiredCapacity: 1
+  labels: { workload: memory-apps, "node.kubernetes.io/instance-type": r7i.large }
+  taints:
+    - key: memory-apps
+      value: "true"
+      effect: NoSchedule
+# Add a node group for compute-intensive applications
+- name: compute-apps
+  instanceType: c7i.large # 'c' series for compute-optimized
+  privateNetworking: true
+  minSize: 1
+  maxSize: 10
+  desiredCapacity: 1
+  labels: { workload: compute-apps, "node.kubernetes.io/instance-type": c7i.large }
+  taints:
+    - key: compute-apps
+      value: "true"
+      effect: NoSchedule
 ```
 
 ```sh
