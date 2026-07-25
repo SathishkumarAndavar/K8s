@@ -2,50 +2,49 @@
 
 ## How it works
 
-GKE manages the Kubernetes control plane. Choose **Autopilot** when Google should manage node configuration, scaling, and many security defaults, or **Standard** when you need more direct control of node pools and infrastructure settings. Regional clusters spread control-plane replicas across a region; zonal clusters have one zonal control plane.
+GKE provides a managed Kubernetes control plane and data plane, offering different modes of operation. Worker nodes are Compute Engine VMs that are automatically registered with the cluster control plane.
 
 ## Important features
 
-- **Autopilot:** workload-driven infrastructure management with enforced operational and security defaults; suitable for most production workloads.
-- **Standard:** configurable node pools, machine types, node images, networking, and operational controls.
-- **Networking:** VPC-native networking, optional Dataplane V2, private clusters, and policy enforcement choices.
-- **Identity:** Workload Identity Federation for GKE lets Pods access Google Cloud APIs without node-wide credentials.
-- **Storage:** CSI-backed Persistent Disks and Filestore are common choices; select the storage class based on latency, topology, and access-mode needs.
-- **Lifecycle:** release channels and maintenance windows control how GKE receives upgrades.
+-   **Modes of Operation**:
+    -   **Standard**: You manage the underlying node infrastructure, giving you flexibility over node configuration. You pay for nodes per second.
+    -   **Autopilot**: GKE provisions and manages the entire cluster infrastructure, including nodes and node pools. You are billed for the pods you run, not the nodes, simplifying operations and cost management.
+-   **Node Pools**: The primary way to manage data plane capacity. You can create multiple node pools with different machine types, zones, labels, and taints (e.g., for system workloads vs. applications).
+-   **Autoscaling**: GKE offers excellent autoscaling capabilities, including cluster autoscaler for nodes and Vertical Pod Autoscaling (VPA) out-of-the-box.
+-   **Networking**:
+    -   **VPC-native clusters (Alias IPs)**: Pods get IPs directly from the VPC's secondary range, making them natively routable within the VPC. This is the recommended and default mode.
+    -   **Routes-based clusters**: Uses a network bridge on each node, requiring custom routes for pod-to-pod communication across nodes.
+-   **Identity**: Use **Workload Identity** to bind Kubernetes Service Accounts to Google Cloud Service Accounts, providing a secure, recommended way for pods to access Google Cloud APIs.
+-   **Storage**: The **GCE Persistent Disk CSI Driver** is automatically enabled, allowing seamless use of `pd-standard`, `pd-balanced`, and `pd-ssd` storage classes.
 
 ## Essential commands
 
 ```sh
-# Create examples: choose one operating mode deliberately
-gcloud container clusters create-auto <cluster> --location <region>
-gcloud container clusters create <cluster> --location <region>
-
-# Configure kubectl and inspect the cluster
-gcloud container clusters get-credentials <cluster> --location <region>
+# Authenticate kubectl to the cluster
+gcloud container clusters get-credentials <cluster-name> --zone <zone> --project <project-id>
 kubectl get nodes -o wide
-gcloud container clusters describe <cluster> --location <region>
 
-# Standard-only node-pool operations
-gcloud container node-pools list --cluster <cluster> --location <region>
-gcloud container node-pools create <pool> --cluster <cluster> --location <region>
+# Inspect cluster and node pools
+gcloud container clusters describe <cluster-name> --zone <zone>
+gcloud container node-pools list --cluster <cluster-name> --zone <zone>
+gcloud container node-pools describe <pool-name> --cluster <cluster-name> --zone <zone>
 ```
 
-## Features and add-ons
+## Upgrade Process
 
-GKE offers cluster capabilities such as Cloud DNS, network policy/Dataplane V2, GCS FUSE CSI, backup, managed metrics, logging, and policy/security integrations. Availability and configuration vary by GKE mode, version, region, and edition. Use `gcloud container clusters describe` to inspect enabled features, and configure features through the supported GKE workflow instead of treating every capability as a generic Kubernetes add-on.
+GKE simplifies upgrades with **release channels**.
 
-## Operational guidance
-
-- Choose Autopilot for reduced node operations; choose Standard only when the additional control is necessary.
-- Plan private/public API access, VPC/subnet ranges, release channel, and maintenance window before creation; several choices are difficult or disruptive to change later.
-- Validate workload resource requests: they influence scheduling, autoscaling, and cost, especially in Autopilot.
+1.  **Release Channels**: Subscribe your cluster to a channel (e.g., `Rapid`, `Regular`, `Stable`). GKE will automatically manage and roll out version upgrades for both the control plane and nodes within that channel. This is the highly recommended approach.
+2.  **Manual Upgrades**:
+    -   **Upgrade Control Plane**: You can manually initiate a control plane upgrade to a specific available version.
+    -   **Upgrade Node Pools**: After the control plane is upgraded, you upgrade each node pool one by one. GKE uses a **surge upgrade** strategy by default: it adds new "surge" nodes with the new version, drains old nodes, and then removes them, minimizing downtime.
 
 ## Interview distinction
 
-The central GKE design choice is **Autopilot versus Standard**: Autopilot shifts more infrastructure operation to Google; Standard leaves more node and configuration responsibility with the platform team.
+GKE's key differentiators are its **Autopilot mode**, which offers a serverless-like Kubernetes experience, and its mature, tightly integrated **release channels** for automated and secure cluster upgrades. Workload Identity provides a very clean model for pod-level GCP permissions.
 
 ## Official references
 
-- [GKE configuration choices](https://cloud.google.com/kubernetes-engine/docs/concepts/configuration-overview)
-- [GKE Autopilot overview](https://cloud.google.com/kubernetes-engine/docs/concepts/autopilot-overview)
-- [Get GKE credentials](https://cloud.google.com/sdk/gcloud/reference/container/clusters/get-credentials)
+-   GKE Architecture
+-   About GKE release channels
+-   Node pool upgrades

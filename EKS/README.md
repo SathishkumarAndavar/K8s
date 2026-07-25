@@ -8,6 +8,9 @@ Amazon EKS manages the Kubernetes control plane. You choose and operate the data
 
 - **Managed control plane:** AWS operates API servers and etcd; you still own workload availability, Kubernetes objects, node capacity, and add-on compatibility.
 - **Compute:** managed node groups provide an AWS-managed node lifecycle; use separate groups for system, application, GPU, Spot, or zone-specific workloads.
+-   **EKS Managed Node Groups vs. Self-Managed Nodes**:
+    -   **Managed Node Groups**: AWS handles node updates, patching, and graceful termination via an Auto Scaling Group. This is the recommended approach for most workloads.
+    -   **Self-Managed Nodes**: You are fully responsible for the EC2 instances, including AMI updates, instance health, and cluster joining logic. This offers more control but requires more operational overhead.
 - **Networking:** the Amazon VPC CNI gives Pods VPC-routable addresses. Plan VPC/subnet IP capacity before high Pod density.
 - **Identity:** prefer EKS Pod Identity or IRSA for Pod-to-AWS permissions; do not distribute node IAM credentials to applications.
 - **Storage:** use the EBS CSI driver for block volumes and EFS CSI driver for shared file workloads.
@@ -93,15 +96,23 @@ eksctl get addon --cluster <cluster-name> --region <aws-region>
 
 ## Upgrade order
 
-1. Review the EKS target-version compatibility and add-on versions.
-2. Upgrade the EKS control plane through AWS.
-3. Update compatible managed add-ons and controllers.
-4. Roll managed node groups or replacement nodes; drain safely and respect PDBs.
-5. Validate DNS, storage, Ingress/load balancers, autoscaling, and applications.
+1.  **Plan**: Review the EKS target-version compatibility guide, checking for required add-on version updates (VPC CNI, CoreDNS, kube-proxy, EBS CSI driver) and any deprecated APIs your workloads use.
+2.  **Backup**: Take an `etcd` snapshot if you have a process for it (though AWS manages this) and back up critical application state (databases, PVCs).
+3.  **Upgrade Control Plane**: Initiate the control plane upgrade via the AWS Console, CLI, or IaC tool. This is a non-disruptive process managed by AWS. Wait for it to complete.
+4.  **Upgrade Add-ons**: After the control plane is upgraded, update the core EKS add-ons (`vpc-cni`, `coredns`, `kube-proxy`, `aws-ebs-csi-driver`) to versions compatible with the new control plane.
+5.  **Upgrade Data Plane (Nodes)**:
+    -   **For EKS Managed Node Groups**: Initiate a version update for the node group. EKS will perform a rolling update, creating new nodes with the updated AMI and draining old nodes, while respecting PDBs.
+    -   **For Karpenter or Self-Managed Nodes**: You must define a new `EC2NodeClass` with an updated AMI or launch new instances with the new EKS-optimized AMI, then drain and terminate the old nodes.
+6.  **Validate**: After the upgrade, thoroughly test the cluster: check node status, verify core services (DNS), test application connectivity, storage, and ingress.
 
 ## Interview distinction
 
 EKS manages the control plane, but it does not remove responsibility for VPC design, IAM boundaries, node/workload lifecycle, Kubernetes add-ons, or application reliability.
+
+## Templating and IaC
+
+-   **eksctl**: Excellent for demos, labs, and simple cluster setups.
+-   **AWS CDK / Terraform**: The standard for production environments. Use the official EKS Blueprints for Terraform or the AWS EKS CDK constructs to define the entire cluster—VPC, control plane, node groups, and add-ons—as code for repeatable, version-controlled infrastructure.
 
 ## Official references
 

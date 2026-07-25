@@ -2,7 +2,7 @@
 
 ## 1. How scheduling works
 
-The `kube-scheduler` is the component responsible for assigning Pods to Nodes. It makes its decisions through a two-phase process for each Pod.
+sThe `kube-scheduler` is the component responsible for assigning Pods to Nodes. It makes its decisions through a two-phase process for each Pod.
 
 ```mermaid
 graph TD
