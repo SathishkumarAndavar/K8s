@@ -1,0 +1,12 @@
+<svg width="960" height="300" viewBox="0 0 960 300" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Kubernetes ingress routing flow">
+  <style>.box{fill:#eff6ff;stroke:#2563eb;stroke-width:2;rx:12}.edge{fill:#fef3c7;stroke:#d97706;stroke-width:2;rx:12}.text{font-family:Arial,sans-serif;font-size:14px;fill:#0f172a}.title{font-family:Arial,sans-serif;font-size:19px;font-weight:bold;fill:#0f172a}.arrow{fill:none;stroke:#0f172a;stroke-width:2;marker-end:url(#a)}</style>
+  <defs><marker id="a" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto"><path d="M0 0 L10 3.5 L0 7Z" fill="#0f172a"/></marker></defs>
+  <text class="title" x="480" y="36" text-anchor="middle">Ingress Traffic and Control Flow</text>
+  <rect class="edge" x="45" y="120" width="135" height="75"/><text class="text" x="112" y="163" text-anchor="middle">Client</text>
+  <rect class="edge" x="245" y="120" width="165" height="75"/><text class="text" x="327" y="153" text-anchor="middle">LoadBalancer /</text><text class="text" x="327" y="174" text-anchor="middle">external address</text>
+  <rect class="box" x="475" y="120" width="170" height="75"/><text class="text" x="560" y="153" text-anchor="middle">Ingress controller</text><text class="text" x="560" y="174" text-anchor="middle">implements rules</text>
+  <rect class="box" x="710" y="120" width="100" height="75"/><text class="text" x="760" y="163" text-anchor="middle">Service</text>
+  <rect class="box" x="850" y="120" width="80" height="75"/><text class="text" x="890" y="163" text-anchor="middle">Pods</text>
+  <line class="arrow" x1="180" y1="157" x2="245" y2="157"/><line class="arrow" x1="410" y1="157" x2="475" y2="157"/><line class="arrow" x1="645" y1="157" x2="710" y2="157"/><line class="arrow" x1="810" y1="157" x2="850" y2="157"/>
+  <text class="text" x="480" y="245" text-anchor="middle">The Ingress object declares host/path rules; the controller watches and programs the data plane.</text>
+</svg>

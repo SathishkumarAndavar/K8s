@@ -1,4 +1,4 @@
-# Kubernetes Architecture
+# Kubernetes Cluster Architecture
 
 ## Overview
 Kubernetes is an open-source container orchestration platform designed to automate deployment, scaling, and management of containerized applications. Its architecture is based on a cluster model with two main node types:

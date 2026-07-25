@@ -13,7 +13,7 @@
     </marker>
   </defs>
   <rect width="960" height="760" class="bg" />
-  <text class="title" x="480" y="40" text-anchor="middle">Kubernetes Operations & HA Flow</text>
+  <text class="title" x="480" y="40" text-anchor="middle">Kubernetes Operations &amp; HA Flow</text>
 
   <rect x="70" y="80" width="260" height="140" class="container" />
   <text class="text" x="200" y="120" text-anchor="middle" font-weight="bold">Client / kubectl</text>
@@ -35,7 +35,7 @@
   <text class="text" x="200" y="545" text-anchor="middle">Service / Pod networking</text>
 
   <rect x="370" y="260" width="530" height="360" class="container" />
-  <text class="text" x="635" y="300" text-anchor="middle" font-weight="bold">Networking & Service Routing</text>
+  <text class="text" x="635" y="300" text-anchor="middle" font-weight="bold">Networking &amp; Service Routing</text>
   <text class="text" x="635" y="325" text-anchor="middle">`kube-proxy` programs service rules</text>
   <text class="text" x="635" y="345" text-anchor="middle">Traffic to ServiceIP → PodIP</text>
 

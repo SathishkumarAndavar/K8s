@@ -1,0 +1,12 @@
+<svg width="960" height="300" viewBox="0 0 960 300" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Kubernetes persistent storage lifecycle">
+  <style>.box{fill:#eff6ff;stroke:#2563eb;stroke-width:2;rx:12}.store{fill:#ecfdf5;stroke:#059669;stroke-width:2;rx:12}.text{font-family:Arial,sans-serif;font-size:14px;fill:#0f172a}.title{font-family:Arial,sans-serif;font-size:19px;font-weight:bold;fill:#0f172a}.arrow{fill:none;stroke:#0f172a;stroke-width:2;marker-end:url(#a)}</style>
+  <defs><marker id="a" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto"><path d="M0 0 L10 3.5 L0 7Z" fill="#0f172a"/></marker></defs>
+  <text class="title" x="480" y="36" text-anchor="middle">Persistent Storage Lifecycle</text>
+  <rect class="box" x="35" y="110" width="160" height="80"/><text class="text" x="115" y="145" text-anchor="middle">Pod mounts PVC</text>
+  <rect class="box" x="245" y="110" width="160" height="80"/><text class="text" x="325" y="145" text-anchor="middle">PVC requests</text><text class="text" x="325" y="166" text-anchor="middle">size / access mode</text>
+  <rect class="box" x="455" y="110" width="160" height="80"/><text class="text" x="535" y="145" text-anchor="middle">StorageClass selects</text><text class="text" x="535" y="166" text-anchor="middle">CSI provisioner</text>
+  <rect class="store" x="665" y="110" width="120" height="80"/><text class="text" x="725" y="155" text-anchor="middle">PV binds</text>
+  <rect class="store" x="825" y="110" width="110" height="80"/><text class="text" x="880" y="145" text-anchor="middle">CSI volume</text><text class="text" x="880" y="166" text-anchor="middle">attached/mounted</text>
+  <line class="arrow" x1="195" y1="150" x2="245" y2="150"/><line class="arrow" x1="405" y1="150" x2="455" y2="150"/><line class="arrow" x1="615" y1="150" x2="665" y2="150"/><line class="arrow" x1="785" y1="150" x2="825" y2="150"/>
+  <text class="text" x="480" y="255" text-anchor="middle">A pre-existing matching PV can bind directly; dynamic provisioning creates one when the StorageClass permits it.</text>
+</svg>
