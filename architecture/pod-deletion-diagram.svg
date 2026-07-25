@@ -1,0 +1,46 @@
+<svg width="960" height="520" viewBox="0 0 960 520" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Kubernetes pod deletion flow diagram">
+  <style>
+    .box { fill: #eef2ff; stroke: #1d4ed8; stroke-width: 2; rx: 14; }
+    .text { font-family: Arial, sans-serif; font-size: 14px; fill: #0f172a; }
+    .title { font-family: Arial, sans-serif; font-size: 18px; font-weight: bold; fill: #0f172a; }
+    .arrow { fill: none; stroke: #0f172a; stroke-width: 2; marker-end: url(#arrowhead); }
+  </style>
+  <defs>
+    <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+      <path d="M0,0 L10,3.5 L0,7 Z" fill="#0f172a" />
+    </marker>
+  </defs>
+  <text class="title" x="480" y="40" text-anchor="middle">Pod Deletion Flow</text>
+  <rect x="80" y="80" width="220" height="100" class="box" />
+  <text class="text" x="190" y="115" text-anchor="middle">Client / kubectl</text>
+  <text class="text" x="190" y="135" text-anchor="middle">`kubectl delete pod`</text>
+
+  <rect x="380" y="80" width="220" height="100" class="box" />
+  <text class="text" x="490" y="115" text-anchor="middle">API Server</text>
+  <text class="text" x="490" y="135" text-anchor="middle">marks deletionTimestamp</text>
+
+  <rect x="680" y="80" width="220" height="100" class="box" />
+  <text class="text" x="790" y="115" text-anchor="middle">etcd</text>
+  <text class="text" x="790" y="135" text-anchor="middle">stores state</text>
+
+  <rect x="100" y="250" width="240" height="120" class="box" />
+  <text class="text" x="220" y="285" text-anchor="middle">Kubelet</text>
+  <text class="text" x="220" y="305" text-anchor="middle">terminates containers</text>
+  <text class="text" x="220" y="325" text-anchor="middle">respects grace period</text>
+
+  <rect x="380" y="250" width="240" height="120" class="box" />
+  <text class="text" x="500" y="285" text-anchor="middle">Service / Endpoints</text>
+  <text class="text" x="500" y="305" text-anchor="middle">removes pod from traffic</text>
+
+  <rect x="660" y="250" width="240" height="120" class="box" />
+  <text class="text" x="780" y="285" text-anchor="middle">ReplicaSet / Deployment</text>
+  <text class="text" x="780" y="305" text-anchor="middle">reconciles desired state</text>
+  <text class="text" x="780" y="325" text-anchor="middle">creates replacement pod</text>
+
+  <line class="arrow" x1="200" y1="180" x2="380" y2="180" />
+  <line class="arrow" x1="600" y1="180" x2="680" y2="180" />
+  <line class="arrow" x1="490" y1="180" x2="490" y2="250" />
+  <line class="arrow" x1="220" y1="370" x2="380" y2="370" />
+  <line class="arrow" x1="620" y1="370" x2="660" y2="370" />
+  <line class="arrow" x1="780" y1="370" x2="780" y2="250" />
+</svg>

@@ -1,0 +1,25 @@
+<svg width="960" height="520" viewBox="0 0 960 520" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="DNS flow diagram">
+  <style>
+    .box { fill: #eff6ff; stroke: #2563eb; stroke-width: 2; rx: 14; }
+    .text { font-family: Arial, sans-serif; font-size: 14px; fill: #0f172a; }
+    .title { font-family: Arial, sans-serif; font-size: 18px; font-weight: bold; fill: #0f172a; }
+    .arrow { fill: none; stroke: #0f172a; stroke-width: 2; marker-end: url(#arrowhead); }
+  </style>
+  <defs>
+    <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+      <path d="M0,0 L10,3.5 L0,7 Z" fill="#0f172a" />
+    </marker>
+  </defs>
+  <text class="title" x="480" y="40" text-anchor="middle">DNS Flow</text>
+  <rect x="80" y="90" width="240" height="120" class="box" />
+  <text class="text" x="200" y="130" text-anchor="middle" font-weight="bold">Client Pod</text>
+  <text class="text" x="200" y="150" text-anchor="middle">queries service DNS</text>
+  <rect x="360" y="90" width="240" height="120" class="box" />
+  <text class="text" x="480" y="130" text-anchor="middle" font-weight="bold">CoreDNS</text>
+  <text class="text" x="480" y="150" text-anchor="middle">resolves service name</text>
+  <rect x="640" y="90" width="240" height="120" class="box" />
+  <text class="text" x="760" y="130" text-anchor="middle" font-weight="bold">Service IP</text>
+  <text class="text" x="760" y="150" text-anchor="middle">returned to pod</text>
+  <line class="arrow" x1="200" y1="210" x2="360" y2="210" />
+  <line class="arrow" x1="600" y1="210" x2="640" y2="210" />
+</svg>

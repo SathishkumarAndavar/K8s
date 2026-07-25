@@ -1,0 +1,50 @@
+<svg width="960" height="580" viewBox="0 0 960 580" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Kubernetes scheduler workflow diagram">
+  <style>
+    .box { fill: #eff6ff; stroke: #3b82f6; stroke-width: 2; rx: 14; }
+    .text { font-family: Arial, sans-serif; font-size: 14px; fill: #0f172a; }
+    .title { font-family: Arial, sans-serif; font-size: 18px; font-weight: bold; fill: #0f172a; }
+    .arrow { fill: none; stroke: #0f172a; stroke-width: 2; marker-end: url(#arrowhead); }
+  </style>
+  <defs>
+    <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+      <path d="M0,0 L10,3.5 L0,7 Z" fill="#0f172a" />
+    </marker>
+  </defs>
+  <text class="title" x="480" y="40" text-anchor="middle">Scheduler Workflow</text>
+
+  <rect x="80" y="90" width="220" height="100" class="box" />
+  <text class="text" x="190" y="130" text-anchor="middle">Unscheduled Pod</text>
+  <text class="text" x="190" y="150" text-anchor="middle">`spec.nodeName` empty</text>
+
+  <rect x="360" y="90" width="220" height="100" class="box" />
+  <text class="text" x="470" y="115" text-anchor="middle">Scheduler Queue</text>
+  <text class="text" x="470" y="135" text-anchor="middle">Pod pending scheduling</text>
+
+  <rect x="650" y="90" width="220" height="100" class="box" />
+  <text class="text" x="760" y="115" text-anchor="middle">Filter Nodes</text>
+  <text class="text" x="760" y="135" text-anchor="middle">resource, affinity, taints</text>
+
+  <rect x="360" y="240" width="220" height="100" class="box" />
+  <text class="text" x="470" y="270" text-anchor="middle">Score Nodes</text>
+  <text class="text" x="470" y="290" text-anchor="middle">choose best fit</text>
+
+  <rect x="80" y="240" width="220" height="100" class="box" />
+  <text class="text" x="190" y="270" text-anchor="middle">Informer Cache</text>
+  <text class="text" x="190" y="290" text-anchor="middle">Nodes, pods, resources</text>
+
+  <rect x="650" y="240" width="220" height="100" class="box" />
+  <text class="text" x="760" y="270" text-anchor="middle">Bind Pod</text>
+  <text class="text" x="760" y="290" text-anchor="middle">set `spec.nodeName`</text>
+
+  <rect x="360" y="400" width="220" height="100" class="box" />
+  <text class="text" x="470" y="430" text-anchor="middle">Kubelet on Node</text>
+  <text class="text" x="470" y="450" text-anchor="middle">creates pod containers</text>
+
+  <line class="arrow" x1="200" y1="190" x2="360" y2="190" />
+  <line class="arrow" x1="580" y1="190" x2="650" y2="190" />
+  <line class="arrow" x1="470" y1="190" x2="470" y2="240" />
+  <line class="arrow" x1="470" y1="340" x2="470" y2="400" />
+  <line class="arrow" x1="470" y1="190" x2="760" y2="190" />
+  <line class="arrow" x1="760" y1="340" x2="760" y2="240" />
+  <line class="arrow" x1="200" y1="240" x2="360" y2="240" />
+</svg>

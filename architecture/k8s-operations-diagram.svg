@@ -1,0 +1,52 @@
+<svg width="960" height="760" viewBox="0 0 960 760" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Kubernetes operations flow diagram">
+  <style>
+    .bg { fill: #f8fafc; }
+    .container { fill: #eef2ff; stroke: #2563eb; stroke-width: 2; rx: 16; }
+    .box { fill: #ffffff; stroke: #1d4ed8; stroke-width: 1.5; rx: 12; }
+    .text { font-family: Arial, sans-serif; font-size: 14px; fill: #0f172a; }
+    .title { font-family: Arial, sans-serif; font-size: 20px; font-weight: bold; fill: #0f172a; }
+    .arrow { fill: none; stroke: #0f172a; stroke-width: 2; marker-end: url(#arrowhead); }
+  </style>
+  <defs>
+    <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+      <path d="M0,0 L10,3.5 L0,7 Z" fill="#0f172a" />
+    </marker>
+  </defs>
+  <rect width="960" height="760" class="bg" />
+  <text class="title" x="480" y="40" text-anchor="middle">Kubernetes Operations & HA Flow</text>
+
+  <rect x="70" y="80" width="260" height="140" class="container" />
+  <text class="text" x="200" y="120" text-anchor="middle" font-weight="bold">Client / kubectl</text>
+  <text class="text" x="200" y="145" text-anchor="middle">`kubectl apply` / API request</text>
+
+  <rect x="360" y="80" width="540" height="140" class="container" />
+  <text class="text" x="630" y="110" text-anchor="middle" font-weight="bold">Control Plane</text>
+  <text class="text" x="520" y="135">API Server → Admission → etcd</text>
+  <text class="text" x="520" y="155">Scheduler → Controller Manager</text>
+
+  <rect x="70" y="260" width="260" height="160" class="container" />
+  <text class="text" x="200" y="300" text-anchor="middle" font-weight="bold">Worker Node A</text>
+  <text class="text" x="200" y="325" text-anchor="middle">kubelet + runtime</text>
+  <text class="text" x="200" y="345" text-anchor="middle">Service / Pod networking</text>
+
+  <rect x="70" y="460" width="260" height="160" class="container" />
+  <text class="text" x="200" y="500" text-anchor="middle" font-weight="bold">Worker Node B</text>
+  <text class="text" x="200" y="525" text-anchor="middle">kubelet + runtime</text>
+  <text class="text" x="200" y="545" text-anchor="middle">Service / Pod networking</text>
+
+  <rect x="370" y="260" width="530" height="360" class="container" />
+  <text class="text" x="635" y="300" text-anchor="middle" font-weight="bold">Networking & Service Routing</text>
+  <text class="text" x="635" y="325" text-anchor="middle">`kube-proxy` programs service rules</text>
+  <text class="text" x="635" y="345" text-anchor="middle">Traffic to ServiceIP → PodIP</text>
+
+  <line class="arrow" x1="200" y1="220" x2="360" y2="220" />
+  <line class="arrow" x1="520" y1="220" x2="520" y2="260" />
+  <line class="arrow" x1="520" y1="260" x2="200" y2="260" />
+  <line class="arrow" x1="520" y1="260" x2="200" y2="460" />
+
+  <line class="arrow" x1="330" y1="340" x2="370" y2="340" />
+  <line class="arrow" x1="330" y1="540" x2="370" y2="540" />
+
+  <text class="text" x="220" y="590" text-anchor="middle">Control Plane HA: multiple API servers, etcd quorum, scheduler/controller leader election</text>
+  <text class="text" x="220" y="610" text-anchor="middle">Worker Node HA: multiple worker nodes, replicated pods, anti-affinity</text>
+</svg>

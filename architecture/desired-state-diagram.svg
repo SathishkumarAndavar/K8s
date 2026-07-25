@@ -1,0 +1,31 @@
+<svg width="960" height="560" viewBox="0 0 960 560" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Desired state versus actual state diagram">
+  <style>
+    .box { fill: #f1f5f9; stroke: #0f172a; stroke-width: 2; rx: 14; }
+    .text { font-family: Arial, sans-serif; font-size: 14px; fill: #0f172a; }
+    .title { font-family: Arial, sans-serif; font-size: 18px; font-weight: bold; fill: #0f172a; }
+    .arrow { fill: none; stroke: #0f172a; stroke-width: 2; marker-end: url(#arrowhead); }
+  </style>
+  <defs>
+    <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+      <path d="M0,0 L10,3.5 L0,7 Z" fill="#0f172a" />
+    </marker>
+  </defs>
+  <text class="title" x="480" y="40" text-anchor="middle">Desired State vs Actual State</text>
+  <rect x="120" y="90" width="320" height="220" class="box" />
+  <text class="text" x="280" y="130" text-anchor="middle" font-weight="bold">Desired State</text>
+  <text class="text" x="280" y="155" text-anchor="middle">Deployment: 5 replicas</text>
+  <text class="text" x="280" y="175" text-anchor="middle">Service: ClusterIP</text>
+  <text class="text" x="280" y="195" text-anchor="middle">ConfigMap: app config</text>
+  <rect x="520" y="90" width="320" height="220" class="box" />
+  <text class="text" x="680" y="130" text-anchor="middle" font-weight="bold">Actual State</text>
+  <text class="text" x="680" y="155" text-anchor="middle">4 pods running</text>
+  <text class="text" x="680" y="175" text-anchor="middle">Service routes traffic</text>
+  <text class="text" x="680" y="195" text-anchor="middle">One pod not yet created</text>
+  <rect x="320" y="350" width="320" height="120" class="box" />
+  <text class="text" x="480" y="380" text-anchor="middle" font-weight="bold">Controller Reconciliation</text>
+  <text class="text" x="480" y="405" text-anchor="middle">Observe actual state</text>
+  <text class="text" x="480" y="425" text-anchor="middle">Create one more pod</text>
+  <line class="arrow" x1="280" y1="240" x2="280" y2="350" />
+  <line class="arrow" x1="680" y1="240" x2="680" y2="350" />
+  <text class="text" x="480" y="300" text-anchor="middle">Desired state stored in etcd, actual state observed by kubelets</text>
+</svg>

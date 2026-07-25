@@ -1,0 +1,21 @@
+<svg width="960" height="520" viewBox="0 0 960 520" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="CRI diagram">
+  <style>
+    .box { fill: #eff6ff; stroke: #2563eb; stroke-width: 2; rx: 14; }
+    .text { font-family: Arial, sans-serif; font-size: 14px; fill: #0f172a; }
+    .title { font-family: Arial, sans-serif; font-size: 18px; font-weight: bold; fill: #0f172a; }
+    .arrow { fill: none; stroke: #0f172a; stroke-width: 2; marker-end: url(#arrowhead); }
+  </style>
+  <defs>
+    <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+      <path d="M0,0 L10,3.5 L0,7 Z" fill="#0f172a" />
+    </marker>
+  </defs>
+  <text class="title" x="480" y="40" text-anchor="middle">CRI Flow</text>
+  <rect x="100" y="110" width="260" height="120" class="box" />
+  <text class="text" x="230" y="150" text-anchor="middle" font-weight="bold">kubelet</text>
+  <text class="text" x="230" y="170" text-anchor="middle">requests container lifecycle</text>
+  <rect x="600" y="110" width="260" height="120" class="box" />
+  <text class="text" x="730" y="150" text-anchor="middle" font-weight="bold">Container Runtime</text>
+  <text class="text" x="730" y="170" text-anchor="middle">executes containers</text>
+  <line class="arrow" x1="330" y1="170" x2="600" y2="170" />
+</svg>
