@@ -16,8 +16,14 @@ These are supplementary study resources. Treat this repository as your primary n
 - [theplatformlab CKA guide](https://github.com/techwithmohamed/CKA-Certified-Kubernetes-Administrator) — recent hands-on exercises, templates, and mock-exam structure.
 
 ## Safe use rules
-
 - Do not treat any community question list as an official or leaked exam bank.
 - Run destructive exercises only in disposable clusters.
 - Prefer current upstream documentation over old examples, especially for CRI, CSI, Ingress/Gateway API, and autoscaling.
 - For every lab, finish with a validation command and clean up the created resources.
+
+## Archived or Unverified Repositories (Use with Caution)
+
+The following repositories are popular but may contain outdated information or "exam dump" style questions. Cross-reference any examples with the official Kubernetes documentation.
+
+- [walidshaari/Certified-Kubernetes-Administrator](https://github.com/walidshaari/Certified-Kubernetes-Administrator) — A well-known but older collection of exercises and notes.
+- [dgkanatsios/CKAD-exercises](https://github.com/dgkanatsios/CKAD-exercises) — While focused on CKAD, many of the core concepts are relevant for CKA practice.
