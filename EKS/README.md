@@ -12,7 +12,7 @@ Amazon EKS provides a managed Kubernetes control plane. You are responsible for 
     -   **Managed Node Groups**: AWS handles node updates, patching, and graceful termination via an Auto Scaling Group. This is the recommended approach for most workloads.
     -   **Self-Managed Nodes**: You are fully responsible for the EC2 instances, including AMI updates, instance health, and cluster joining logic. This offers more control but requires more operational overhead.
 - **Networking:** the Amazon VPC CNI gives Pods VPC-routable addresses. Plan VPC/subnet IP capacity before high Pod density.
-- **Identity:** use **EKS Pod Identity** (recommended) or IAM Roles for Service Accounts (IRSA) for providing AWS permissions to Pods. Avoid using node IAM profiles for applications.
+- **Identity:** use **EKS Pod Identity** (recommended) or the older IAM Roles for Service Accounts (IRSA) to provide AWS permissions to Pods. Avoid using node IAM profiles for applications.
 - **Storage:** use the EBS CSI driver for block volumes and EFS CSI driver for shared file workloads.
 - **Load balancing:** use the AWS Load Balancer Controller when you need ALB/NLB resources from Kubernetes Services or Ingress/Gateway resources.
 

@@ -12,7 +12,7 @@ This file explains leader election in Kubernetes and why it is important for HA 
 - custom controllers built with leader election support
 
 ## How it works
-- Instances create a lock object in the API server.
+- Instances attempt to create and update a lock object in the API server, typically a `Lease` object in the `coordination.k8s.io` API group.
 - The current leader holds the lock by periodically renewing it.
 - If the leader fails to renew, another instance acquires the lock.
 
@@ -25,6 +25,7 @@ This file explains leader election in Kubernetes and why it is important for HA 
 
 ## Important points
 - Leader election is typically implemented using ConfigMaps or Endpoints as lock objects.
+- **Lease objects are the modern and recommended lock mechanism** as they are more efficient and designed for this purpose. Older implementations might still use `ConfigMaps` or `Endpoints`.
 - It uses the API server as a coordination point.
 - It allows HA without running duplicate reconciliation logic.
 - Only the leader performs active control plane work.
@@ -32,7 +33,7 @@ This file explains leader election in Kubernetes and why it is important for HA 
 ## Interview-ready summary
 - Leader election ensures only one controller or scheduler instance is active.
 - It makes control plane components HA-safe.
-- The API server coordinates the election using lock objects.
+- The API server coordinates the election using lock objects, primarily `Lease` resources.
 
 ## Diagram
 

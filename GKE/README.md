@@ -14,7 +14,7 @@ GKE provides a managed Kubernetes control plane and data plane, offering differe
 -   **Networking**:
     -   **VPC-native clusters (Alias IPs)**: Pods get IPs directly from the VPC's secondary range, making them natively routable. This is the default and recommended mode.
     -   **Routes-based clusters**: Uses a network bridge on each node, requiring custom routes for pod-to-pod communication across nodes.
--   **Identity**: Use **Workload Identity** to bind Kubernetes Service Accounts to Google Cloud Service Accounts, providing a secure, recommended way for pods to access Google Cloud APIs.
+-   **Identity**: Use **Workload Identity** to bind Kubernetes Service Accounts (KSAs) to Google Service Accounts (GSAs), providing a secure, recommended way for pods to access Google Cloud APIs.
 -   **Storage**: The **GCE Persistent Disk CSI Driver** is automatically enabled, allowing seamless use of `pd-standard`, `pd-balanced`, and `pd-ssd` storage classes.
 
 ## Essential commands

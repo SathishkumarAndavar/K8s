@@ -6,6 +6,9 @@ Notes are organized around the Kubernetes concepts taxonomy.
 - **Cluster Architecture:** control plane, nodes, and architecture diagrams. See [Cluster Architecture](cluster-architecture/README.md).
 - **Concepts:** workloads, scheduling, networking, storage, security, containers, and cluster administration. See [Kubernetes Concepts](concepts/README.md).
 - **kubectl:** essential command-line reference for hands-on tasks. See [kubectl reference](kubectl/README.md).
+- **Setup:** guides for installing and bootstrapping clusters. See [Setup](setup/README.md).
+- **Tasks:** step-by-step guides for common administrative actions. See [Tasks](tasks/README.md).
+- **Tutorials:** end-to-end walkthroughs for deploying applications. See [Tutorials](tutorials/README.md).
 - **Reference:** deep-dive material on the API, components, and tools. See [Kubernetes Reference](reference/README.md).
 - **CKA:** curated CKA practice questions and answers. See [CKA practice](CKA/README.md).
 - **Practical Examples:** hands-on YAML and command examples. See [Practical Examples](practical-examples/README.md).

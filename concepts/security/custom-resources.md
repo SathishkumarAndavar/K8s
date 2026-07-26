@@ -13,6 +13,28 @@ CRDs are the foundation of the **Operator Pattern**, where you write a custom co
 
 ---
 
+## The Operator Pattern
+
+An **Operator** is a custom Kubernetes controller that uses CRDs to manage an application and its components. It encodes human operational knowledge into software.
+
+The core of an operator is a **reconciliation loop**:
+1.  **Observe**: Watch the current state of the custom resources.
+2.  **Analyze**: Compare the desired state (from the CR's spec) with the actual state of the cluster (e.g., running Pods, Services).
+3.  **Act**: Take actions to make the actual state match the desired state. For our `CronTab` example, this would mean creating or updating a `CronJob` object.
+
+```mermaid
+graph TD
+    A[User applies CronTab object] --> B(API Server);
+    B -- Watch Event --> C(CronTab Controller);
+    C -- Reads --> B;
+    subgraph "Reconciliation Loop"
+        C --> D{Spec matches CronJob?};
+        D -- No --> E[Create/Update CronJob];
+        D -- Yes --> F[Do Nothing];
+        E --> B;
+    end
+```
+
 ## Practical Example: A Simple `CronTab` CRD
 
 Let's create a custom resource called `CronTab` that specifies a cron schedule and an image to run.

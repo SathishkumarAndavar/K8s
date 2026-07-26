@@ -64,7 +64,28 @@ AKS provides a coordinated upgrade process for the control plane and nodes.
 
 ## Interview distinction
 
-AKS is deeply integrated into the Azure ecosystem. Key features include its use of Virtual Machine Scale Sets for agent pools, the choice between Kubenet and Azure CNI for networking, and the first-class support for Windows containers via Windows node pools. Azure AD Workload Identity is its modern solution for pod-level cloud permissions.
+AKS is deeply integrated into the Azure ecosystem. Key features include its use of **Virtual Machine Scale Sets (VMSS)** for agent pools, the choice between **Kubenet** (basic) and **Azure CNI** (advanced, pod-native networking), and first-class support for **Windows Server node pools**. **Azure AD Workload Identity** is its modern solution for pod-level cloud permissions.
+
+## Workload Identity (Pod Access to Azure APIs)
+
+Azure AD Workload Identity uses OIDC federation to allow pods to securely access Azure resources.
+
+1.  **Enable OIDC Issuer** on your AKS cluster.
+2.  **Create an Azure AD Application** and a service principal for your workload.
+3.  **Establish a Federated Credential**: Configure a trust relationship between the Azure AD application and the Kubernetes Service Account. This tells Azure AD to trust tokens issued by your cluster's OIDC provider for a specific service account.
+4.  **Label the KSA**: Add a specific label to your Kubernetes Service Account indicating the client ID of the Azure AD application.
+
+When a pod uses this labeled service account, a mutating webhook injects environment variables and a projected service account token volume into the pod. The Azure Identity SDKs in your application use these to automatically exchange the Kubernetes token for an Azure AD access token.
+
+**Example KSA Label:**
+```yaml
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: my-app-sa
+  labels:
+    azure.workload.identity/use: "true"
+```
 
 ## Official references
 

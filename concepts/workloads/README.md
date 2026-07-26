@@ -1,15 +1,18 @@
-# Workloads
+# Kubernetes API Reference
 
-Workloads are the objects you create in Kubernetes to manage and run your containerized applications. The most fundamental workload object is the **Pod**. All other workload controllers are abstractions that manage Pods.
+This section provides a reference for the Kubernetes API itself.
 
-## Core Workload Resources
+*   **[API Concepts](./api-concepts.md)**: A detailed guide to API terminology, verbs, resource versions, and interaction patterns.
+## Key API Concepts
 
--   **Pod**: The smallest and simplest unit in the Kubernetes object model that you create or deploy. A Pod represents a single instance of a running process in your cluster and can contain one or more containers.
--   **Controllers**: Higher-level objects that manage Pods and provide features like scaling, self-healing, and rollout strategies.
-    -   **Deployment**: Manages a set of replicated, stateless Pods. Ideal for web servers and APIs. It handles rolling updates and rollbacks.
-    -   **StatefulSet**: Manages a set of stateful Pods that require stable, unique network identifiers and persistent storage. Ideal for databases and other stateful applications.
-    -   **DaemonSet**: Ensures that all (or some) Nodes run a copy of a Pod. Ideal for cluster-level agents like log collectors or monitoring agents.
-    -   **Job**: Creates one or more Pods and ensures that a specified number of them successfully terminate. Ideal for batch processing and one-off tasks.
-    -   **CronJob**: Manages a Job that runs on a repeating schedule.
+-   **API Groups**: The Kubernetes API is grouped for extensibility. Core resources are in the `core` group (often seen as `/api/v1`), while others are in named groups like `apps/v1`, `batch/v1`, and `networking.k8s.io/v1`.
+-   **Server-Side Apply**: A mechanism for controllers and users to manage resource ownership declaratively.
+-   **Deprecation Policy & Migration**: How and when API versions are removed, and how to migrate to newer versions. See the Deprecated API Migration Guide.
+-   **API Health Endpoints**: The API server exposes health endpoints like `/livez` and `/readyz` to monitor its status.
+-   **API Priority and Fairness (Flow Control)**: How the API server manages high request volumes to maintain stability.
 
-*See also: [Pods](https://kubernetes.io/docs/concepts/workloads/pods/), [Workload Controllers](https://kubernetes.io/docs/concepts/workloads/controllers/)*
+## API Access and Control
+
+-   **API Access Control**: A detailed look at how Kubernetes secures access to the API through authentication, authorization, and admission control.
+
+*See also: Kubernetes API Concepts*

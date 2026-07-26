@@ -48,6 +48,25 @@ spec:
 4. The pod mounts the PVC.
 
 ## Important points
+- **Dynamic Provisioning Flow**:
+  ```mermaid
+  sequenceDiagram
+      participant User
+      participant APIServer as API Server
+      participant PVController as PV Controller
+      participant CSIDriver as CSI Driver
+      participant CloudAPI as Cloud Provider API
+
+      User->>+APIServer: 1. Create PVC
+      APIServer-->>-User: PVC is Pending
+      APIServer->>+PVController: 2. Notifies of new PVC
+      PVController->>+CSIDriver: 3. Instructs to CreateVolume
+      CSIDriver->>+CloudAPI: 4. Provisions storage (e.g., EBS Volume)
+      CloudAPI-->>-CSIDriver: Returns Volume ID
+      CSIDriver->>+PVController: 5. Creates PV object with Volume ID
+      PVController->>+APIServer: 6. Binds PV to PVC
+      APIServer-->>User: PVC becomes Bound
+  ```
 - PV is storage; PVC is the claim.
 - StorageClass controls dynamic provisioning.
 - Modern clusters normally use a CSI driver (for example, the AWS EBS CSI driver) rather than legacy in-tree provisioners.
